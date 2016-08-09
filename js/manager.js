@@ -20,7 +20,7 @@ module.exports = function (oAppData, iUserRole, bPublic) {
 			 * @param {Object} ModulesManager Modules manager object.
 			 */
 			start: function (ModulesManager) {
-				ModulesManager.run('AdminPanelClient', 'registerAdminPanelTab', [
+				ModulesManager.run('AdminPanelWebclient', 'registerAdminPanelTab', [
 					function () { return require('modules/%ModuleName%/js/views/AccountsSettingsView.js'); },
 					Settings.HashModuleName + '-accounts',
 					TextUtils.i18n('%MODULENAME%/LABEL_BASIC_ACCOUNTS_TAB')
@@ -38,7 +38,7 @@ module.exports = function (oAppData, iUserRole, bPublic) {
 			 * @param {Object} ModulesManager Modules manager object.
 			 */
 			start: function (ModulesManager) {
-				ModulesManager.run('SettingsClient', 'registerSettingsTab', [
+				ModulesManager.run('SettingsWebclient', 'registerSettingsTab', [
 					function () { return require('modules/%ModuleName%/js/views/AccountsSettingsView.js'); },
 					Settings.HashModuleName + '-accounts',
 					TextUtils.i18n('%MODULENAME%/LABEL_BASIC_ACCOUNTS_TAB')

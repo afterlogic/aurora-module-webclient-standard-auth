@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-	ServerModuleName: 'BasicAuth',
-	HashModuleName: 'basicauth',
+	ServerModuleName: 'StandardAuth',
+	HashModuleName: 'standardauth'
 };
