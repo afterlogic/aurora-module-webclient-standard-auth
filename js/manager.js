@@ -8,7 +8,7 @@ module.exports = function (oAppData, iUserRole, bPublic) {
 		Settings = require('modules/%ModuleName%/js/Settings.js'),
 		
 		bAdminUser = iUserRole === Enums.UserRole.SuperAdmin,
-		bPowerUser = iUserRole === Enums.UserRole.PowerUser
+		bPowerUser = iUserRole === Enums.UserRole.NormalUser
 	;
 	
 	if (bAdminUser)

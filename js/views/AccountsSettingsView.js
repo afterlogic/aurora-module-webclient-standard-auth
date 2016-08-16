@@ -36,7 +36,7 @@ function CAccountsSettingsView()
 	this.accounts = ko.observableArray([]); // current user account list
 	this.currentAccountId = ko.observable(0); // current account identifier
 	
-	if (App.getUserRole() === Enums.UserRole.PowerUser)
+	if (App.getUserRole() === Enums.UserRole.NormalUser)
 	{
 		ko.computed(function () {
 			this.visible(this.accounts().length > 0);
