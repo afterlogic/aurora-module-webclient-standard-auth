@@ -8,13 +8,13 @@
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_LOGIN'}"></span>
 				<span class="value">
-					<input class="input" type="text" data-bind="value: login, hasFocus: loginFocus, enable: currentAccountId() === 0, css: {'disabled': currentAccountId() !== 0}" />
+					<input class="input" type="text" data-bind="value: login, hasFocus: loginFocus, enable: currentAccountId() === 0, css: {'disabled': currentAccountId() !== 0}, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_PASSWORD'}"></span>
 				<span class="value">
-					<input class="input" type="password" data-bind="value: pass, hasFocus: passFocus" />
+					<input class="input" type="password" data-bind="value: pass, hasFocus: passFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
 		</div>
