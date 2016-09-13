@@ -1,14 +1,16 @@
 'use strict';
 
 
-module.exports = function (oAppData, iUserRole, bPublic) {
+module.exports = function (oAppData) {
 	var
 		TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
 		
+		App = require('%PathToCoreWebclientModule%/js/App.js'),
+		
 		Settings = require('modules/%ModuleName%/js/Settings.js'),
 		
-		bAdminUser = iUserRole === Enums.UserRole.SuperAdmin,
-		bPowerUser = iUserRole === Enums.UserRole.NormalUser
+		bAdminUser = App.getUserRole() === Enums.UserRole.SuperAdmin,
+		bPowerUser = App.getUserRole() === Enums.UserRole.NormalUser
 	;
 	
 	if (bAdminUser)
