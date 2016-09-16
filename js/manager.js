@@ -10,7 +10,7 @@ module.exports = function (oAppData) {
 		Settings = require('modules/%ModuleName%/js/Settings.js'),
 		
 		bAdminUser = App.getUserRole() === Enums.UserRole.SuperAdmin,
-		bPowerUser = App.getUserRole() === Enums.UserRole.NormalUser
+		bNormalUser = App.getUserRole() === Enums.UserRole.NormalUser
 	;
 	
 	if (bAdminUser)
@@ -31,7 +31,7 @@ module.exports = function (oAppData) {
 		};
 	}
 	
-	if (bPowerUser)
+	if (bNormalUser)
 	{
 		return {
 			/**
