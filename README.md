@@ -1,2 +1,2 @@
 # aurora-module-webclient-standard-auth
-test
+This module provides db-based authentication by login/password.
