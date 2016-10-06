@@ -37,13 +37,6 @@ function CAccountsSettingsView()
 	this.accounts = ko.observableArray([]); // current user account list
 	this.currentAccountId = ko.observable(0); // current account identifier
 	
-	if (App.getUserRole() === Enums.UserRole.NormalUser)
-	{
-		ko.computed(function () {
-			this.visible(this.accounts().length > 0);
-		}, this);
-	}
-	
 	//heading text for account create form
 	this.createAccountHeading = ko.computed(function () {
 		if (this.accounts().length === 0)
@@ -76,6 +69,15 @@ function CAccountsSettingsView()
 	
 	this.visibleCreateForm = ko.observable(false);
 	this.isCreating = ko.observable(false);
+	
+	if (App.getUserRole() === Enums.UserRole.NormalUser)
+	{
+		this.requestAccounts();
+		
+		ko.computed(function () {
+			this.visible(this.accounts().length > 0);
+		}, this);
+	}
 	
 	App.subscribeEvent(Settings.ServerModuleName + '::CreateUserAuthAccount', _.bind(function (oParams) {
 		Ajax.send('CreateAuthenticatedUserAccount', {'Login': oParams.Login, 'Password': oParams.Password}, _.bind(function (oResponse) {
