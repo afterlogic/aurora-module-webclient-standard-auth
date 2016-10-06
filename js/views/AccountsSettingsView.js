@@ -11,6 +11,7 @@ var
 	
 	Api = require('%PathToCoreWebclientModule%/js/Api.js'),
 	App = require('%PathToCoreWebclientModule%/js/App.js'),
+	CoreAjax = require('%PathToCoreWebclientModule%/js/Ajax.js'),
 	ModulesManager = require('%PathToCoreWebclientModule%/js/ModulesManager.js'),
 	Screens = require('%PathToCoreWebclientModule%/js/Screens.js'),
 	CAbstractSettingsFormView = ModulesManager.run('SettingsWebclient', 'getAbstractSettingsFormViewClass'),
@@ -64,15 +65,17 @@ function CAccountsSettingsView()
 		return (this.currentAccountId() === 0) ? TextUtils.i18n('%MODULENAME%/ACTION_CREATE_IN_PROGRESS') : TextUtils.i18n('%MODULENAME%/ACTION_UPDATE_IN_PROGRESS');
 	}, this);
 	
+	this.sUserPublicId = '';
+
 	this.login = ko.observable(''); // new account login
 	this.loginFocus = ko.observable(false);
 	this.pass = ko.observable(''); // new account password
 	this.passFocus = ko.observable(false);
+	this.confirmPass = ko.observable(''); // new account password
+	this.confirmPassFocus = ko.observable(false);
 	
 	this.visibleCreateForm = ko.observable(false);
 	this.isCreating = ko.observable(false);
-	
-	this.requestAccounts();
 	
 	App.subscribeEvent(Settings.ServerModuleName + '::CreateUserAuthAccount', _.bind(function (oParams) {
 		Ajax.send('CreateAuthenticatedUserAccount', {'Login': oParams.Login, 'Password': oParams.Password}, _.bind(function (oResponse) {
@@ -147,6 +150,14 @@ CAccountsSettingsView.prototype.setAccessLevel = function (sEntityType, iEntityI
 		this.accounts([]);
 		this.hideEditAccountForm();
 		this.iUserId = iEntityId || -1;
+		this.sUserPublicId = '';
+		CoreAjax.send('Core', 'GetUser', {'UserId': this.iUserId}, _.bind(function (oResponse, oRequest) {
+			if (oResponse.Result && oRequest.Parameters.UserId === this.iUserId)
+			{
+				this.sUserPublicId = oResponse.Result.PublicId;
+				this.login(this.sUserPublicId);
+			}
+		}, this));
 	}
 };
 
@@ -206,7 +217,7 @@ CAccountsSettingsView.prototype.openEditAccountForm = function (iAccountId)
 	else
 	{
 		this.currentAccountId(0);
-		this.login('');
+		this.login(this.sUserPublicId);
 		this.loginFocus(true);
 		this.pass('');
 	}
@@ -226,6 +237,11 @@ CAccountsSettingsView.prototype.saveAccount = function ()
 	else if (this.pass() === '' || this.pass() === this.sFakePass)
 	{
 		this.passFocus(true);
+	}
+	else if (this.pass() !== this.confirmPass())
+	{
+		Screens.showError(TextUtils.i18n('COREWEBCLIENT/ERROR_PASSWORDS_DO_NOT_MATCH'));
+		this.confirmPassFocus(true);
 	}
 	else if (this.currentAccountId() === 0)
 	{

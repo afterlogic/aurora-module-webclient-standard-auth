@@ -8,7 +8,7 @@
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_LOGIN'}"></span>
 				<span class="value">
-					<input class="input" type="text" data-bind="value: login, hasFocus: loginFocus, enable: currentAccountId() === 0, css: {'disabled': currentAccountId() !== 0}, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
+					<input class="input disabled" type="text" data-bind="value: login, hasFocus: loginFocus, enable: false, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
 			<div class="row">
@@ -17,6 +17,13 @@
 					<input class="input" type="password" data-bind="value: pass, hasFocus: passFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
+			<div class="row">
+				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_CONFIRM_PASSWORD'}"></span>
+				<span class="value">
+					<input class="input" type="password" data-bind="value: confirmPass, hasFocus: confirmPassFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
+				</span>
+			</div>
+			{%INCLUDE-START/Edit-Standard-Account-After/INCLUDE-END%}
 		</div>
 
 		<div class="buttons" data-bind="visible: visibleCreateForm">
