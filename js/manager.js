@@ -3,6 +3,8 @@
 
 module.exports = function (oAppData) {
 	var
+		_ = require('underscore'),
+		
 		TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
 		
 		App = require('%PathToCoreWebclientModule%/js/App.js'),
@@ -40,6 +42,13 @@ module.exports = function (oAppData) {
 			 * @param {Object} ModulesManager Modules manager object.
 			 */
 			start: function (ModulesManager) {
+				App.subscribeEvent('ReceiveAjaxResponse::after', function (oParams) {
+					if (oParams.Request.Module === '%ModuleName%' && oParams.Request.Method === 'GetUserAccounts')
+					{
+						Settings.userAccountsCount(_.isArray(oParams.Response.Result) ? oParams.Response.Result.length : 0);
+					}
+				});
+				
 				ModulesManager.run('SettingsWebclient', 'registerSettingsTab', [
 					function () { return require('modules/%ModuleName%/js/views/AccountsSettingsView.js'); },
 					Settings.HashModuleName + '-accounts',
