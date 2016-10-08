@@ -15,6 +15,8 @@ module.exports = function (oAppData) {
 		bNormalUser = App.getUserRole() === Enums.UserRole.NormalUser
 	;
 	
+	Settings.init();
+	
 	if (bAdminUser)
 	{
 		return {
@@ -43,7 +45,7 @@ module.exports = function (oAppData) {
 			 */
 			start: function (ModulesManager) {
 				App.subscribeEvent('ReceiveAjaxResponse::after', function (oParams) {
-					if (oParams.Request.Module === '%ModuleName%' && oParams.Request.Method === 'GetUserAccounts')
+					if (oParams.Request.Module === Settings.ServerModuleName && oParams.Request.Method === 'GetUserAccounts')
 					{
 						Settings.userAccountsCount(_.isArray(oParams.Response.Result) ? oParams.Response.Result.length : 0);
 					}
