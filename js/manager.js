@@ -47,7 +47,7 @@ module.exports = function (oAppData) {
 				App.subscribeEvent('ReceiveAjaxResponse::after', function (oParams) {
 					if (oParams.Request.Module === Settings.ServerModuleName && oParams.Request.Method === 'GetUserAccounts')
 					{
-						Settings.userAccountsCount(_.isArray(oParams.Response.Result) ? oParams.Response.Result.length : 0);
+						Settings.userAccountsCount(_.isArray(oParams.MainResponse.Result) ? oParams.MainResponse.Result.length : 0);
 					}
 				});
 				
