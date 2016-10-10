@@ -215,6 +215,7 @@ CAccountsSettingsView.prototype.openEditAccountForm = function (iAccountId)
 		this.login(oAccount.login);
 		this.pass(this.sFakePass);
 		this.passFocus(true);
+		this.confirmPass('');
 	}
 	else
 	{
@@ -222,6 +223,7 @@ CAccountsSettingsView.prototype.openEditAccountForm = function (iAccountId)
 		this.login(this.sUserPublicId);
 		this.loginFocus(true);
 		this.pass('');
+		this.confirmPass('');
 	}
 	
 	this.visibleCreateForm(true);
