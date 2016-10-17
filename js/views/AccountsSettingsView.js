@@ -96,11 +96,14 @@ function CAccountsSettingsView()
 			}
 		}, this));
 	}, this));
+	
+	App.broadcastEvent('%ModuleName%::ConstructView::after', {'Name': this.ViewConstructorName, 'View': this});
 }
 
 _.extendOwn(CAccountsSettingsView.prototype, CAbstractSettingsFormView.prototype);
 
 CAccountsSettingsView.prototype.ViewTemplate = '%ModuleName%_AccountsSettingsView';
+CAccountsSettingsView.prototype.ViewConstructorName = 'CAccountsSettingsView';
 
 /**
  * Runs after routing to this view.
@@ -108,6 +111,7 @@ CAccountsSettingsView.prototype.ViewTemplate = '%ModuleName%_AccountsSettingsVie
 CAccountsSettingsView.prototype.onRoute = function ()
 {
 	this.requestAccounts();
+	App.broadcastEvent('CAccountsSettingsView::onRoute::after', {'Name': this.ViewConstructorName, 'View': this});
 };
 
 /**
