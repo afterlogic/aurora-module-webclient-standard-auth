@@ -14,13 +14,22 @@ var
 	CoreAjax = require('%PathToCoreWebclientModule%/js/Ajax.js'),
 	ModulesManager = require('%PathToCoreWebclientModule%/js/ModulesManager.js'),
 	Screens = require('%PathToCoreWebclientModule%/js/Screens.js'),
-	CAbstractSettingsFormView = ModulesManager.run('SettingsWebclient', 'getAbstractSettingsFormViewClass'),
+	CAbstractSettingsFormView,
 	
 	UserSettings = require('%PathToCoreWebclientModule%/js/Settings.js'),
 	
 	Ajax = require('modules/%ModuleName%/js/Ajax.js'),
 	Settings = require('modules/%ModuleName%/js/Settings.js')
 ;
+
+if (App.getUserRole() === Enums.UserRole.SuperAdmin)
+{
+	CAbstractSettingsFormView = ModulesManager.run('AdminPanelWebclient', 'getAbstractSettingsFormViewClass');
+}
+else
+{
+	CAbstractSettingsFormView = ModulesManager.run('SettingsWebclient', 'getAbstractSettingsFormViewClass');
+}
 
 /**
 * @constructor for object that is binded to screen with basic account list 
