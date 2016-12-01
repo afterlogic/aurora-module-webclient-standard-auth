@@ -27,7 +27,16 @@ module.exports = function (oAppData) {
 			 */
 			start: function (ModulesManager) {
 				ModulesManager.run('AdminPanelWebclient', 'registerAdminPanelTab', [
-					function () { return require('modules/%ModuleName%/js/views/AccountsSettingsView.js'); },
+					//callback for promise
+					function(resolve) {
+						require.ensure(
+							['modules/%ModuleName%/js/views/AccountsSettingsView.js'],
+							function() {
+								resolve(require('modules/%ModuleName%/js/views/AccountsSettingsView.js'));
+							},
+							"admin-bundle"
+						);
+					},
 					Settings.HashModuleName + '-accounts',
 					TextUtils.i18n('%MODULENAME%/LABEL_BASIC_ACCOUNTS_TAB')
 				]);
