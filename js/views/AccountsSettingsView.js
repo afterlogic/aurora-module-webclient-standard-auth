@@ -151,7 +151,7 @@ CAccountsSettingsView.prototype.requestAccounts = function ()
 };
 
 /**
- * Sets access level for the view via entity type and entity identificator.
+ * Sets access level for the view via entity type and entity identifier.
  * This view is visible only for entity type 'User'.
  * 
  * @param {string} sEntityType Current entity type.
@@ -177,9 +177,9 @@ CAccountsSettingsView.prototype.setAccessLevel = function (sEntityType, iEntityI
 };
 
 /**
- * Show popup to confirm deleting of basic account with specified identificator.
+ * Show popup to confirm deleting of basic account with specified identifier.
  * 
- * @param {number} iAccountId Identificator of basic account that should be deleted.
+ * @param {number} iAccountId Identifier of basic account that should be deleted.
  * @param {string} sLogin Login of basic account that should be deleted. Uses in confirm popup text.
  */
 CAccountsSettingsView.prototype.confirmAccountDeleting = function (iAccountId, sLogin)
@@ -190,7 +190,7 @@ CAccountsSettingsView.prototype.confirmAccountDeleting = function (iAccountId, s
 /**
  * Sends request to the server to delete specified basic account.
  * 
- * @param {number} iAccountId Identificator of basic account that should be deleted.
+ * @param {number} iAccountId Identifier of basic account that should be deleted.
  * @param {boolean} bDelete Indicates if administrator confirmed account deleting or not.
  */
 CAccountsSettingsView.prototype.deleteAccount = function (iAccountId, bDelete)
@@ -214,7 +214,7 @@ CAccountsSettingsView.prototype.deleteAccount = function (iAccountId, bDelete)
 /**
  * Displays edit account form.
  * 
- * @param {number} iAccountId Identificator of basic account that should be deleted.
+ * @param {number} iAccountId Identifier of basic account that should be deleted.
  */
 CAccountsSettingsView.prototype.openEditAccountForm = function (iAccountId)
 {
