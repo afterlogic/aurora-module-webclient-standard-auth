@@ -94,7 +94,7 @@ function CAccountsSettingsView()
 			{
 				oParams.SuccessCallback();
 				this.accounts.push({
-					id: oResponse.Result.iObjectId,
+					id: oResponse.Result.EntityId,
 					login: oParams.Login
 				});
 				App.broadcastEvent('OpenSettingTab', {'Name': this.SettingsTabName});
