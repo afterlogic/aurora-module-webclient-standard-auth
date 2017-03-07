@@ -32,7 +32,7 @@ else
 }
 
 /**
-* @constructor for object that is binded to screen with basic account list 
+* @constructor for object that is bound to screen with basic account list 
 * and ability to create new basic account for specified user 
 */
 function CAccountsSettingsView()
