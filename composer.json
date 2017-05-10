@@ -2,7 +2,7 @@
 	"name": "afterlogic/aurora-module-webclient-standard-auth",
 	"type": "aurora-module",
 	"require": {
-		"afterlogic/aurora-framework": "~0.3"
+		"afterlogic/aurora-framework": "~0.4"
 	},
 	"extra": {
 		"installer-name": "StandardAuthWebclient"
