@@ -5,6 +5,8 @@
 		"afterlogic/aurora-framework": "~0.4"
 	},
 	"extra": {
-		"installer-name": "StandardAuthWebclient"
+		"installer-name": "StandardAuthWebclient",
+		"include-in-mobile": true,
+		"include-in-desktop": true
 	}
 }
