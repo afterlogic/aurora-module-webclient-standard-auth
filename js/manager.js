@@ -30,9 +30,9 @@ module.exports = function (oAppData) {
 					//callback for promise
 					function(resolve) {
 						require.ensure(
-							['modules/%ModuleName%/js/views/AccountsSettingsView.js'],
+							['modules/%ModuleName%/js/views/StandardAccountsSettingsFormView.js'],
 							function() {
-								resolve(require('modules/%ModuleName%/js/views/AccountsSettingsView.js'));
+								resolve(require('modules/%ModuleName%/js/views/StandardAccountsSettingsFormView.js'));
 							},
 							"admin-bundle"
 						);
@@ -61,7 +61,7 @@ module.exports = function (oAppData) {
 				});
 				
 				ModulesManager.run('SettingsWebclient', 'registerSettingsTab', [
-					function () { return require('modules/%ModuleName%/js/views/AccountsSettingsView.js'); },
+					function () { return require('modules/%ModuleName%/js/views/StandardAccountsSettingsFormView.js'); },
 					Settings.HashModuleName + '-accounts',
 					TextUtils.i18n('%MODULENAME%/LABEL_BASIC_ACCOUNTS_TAB')
 				]);

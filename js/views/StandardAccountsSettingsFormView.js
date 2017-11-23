@@ -35,7 +35,7 @@ else
 * @constructor for object that is bound to screen with basic account list 
 * and ability to create new basic account for specified user 
 */
-function CAccountsSettingsView()
+function CStandardAccountsSettingsFormView()
 {
 	CAbstractSettingsFormView.call(this, UserSettings.ServerModuleName);
 
@@ -109,24 +109,24 @@ function CAccountsSettingsView()
 	App.broadcastEvent('%ModuleName%::ConstructView::after', {'Name': this.ViewConstructorName, 'View': this});
 }
 
-_.extendOwn(CAccountsSettingsView.prototype, CAbstractSettingsFormView.prototype);
+_.extendOwn(CStandardAccountsSettingsFormView.prototype, CAbstractSettingsFormView.prototype);
 
-CAccountsSettingsView.prototype.ViewTemplate = '%ModuleName%_AccountsSettingsView';
-CAccountsSettingsView.prototype.ViewConstructorName = 'CAccountsSettingsView';
+CStandardAccountsSettingsFormView.prototype.ViewTemplate = '%ModuleName%_StandardAccountsSettingsFormView';
+CStandardAccountsSettingsFormView.prototype.ViewConstructorName = 'CStandardAccountsSettingsFormView';
 
 /**
  * Runs after routing to this view.
  */
-CAccountsSettingsView.prototype.onRoute = function ()
+CStandardAccountsSettingsFormView.prototype.onRoute = function ()
 {
 	this.requestAccounts();
-	App.broadcastEvent('CAccountsSettingsView::onRoute::after', {'Name': this.ViewConstructorName, 'View': this});
+	App.broadcastEvent('CStandardAccountsSettingsFormView::onRoute::after', {'Name': this.ViewConstructorName, 'View': this});
 };
 
 /**
  * Requests basic accounts for current user.
  */
-CAccountsSettingsView.prototype.requestAccounts = function ()
+CStandardAccountsSettingsFormView.prototype.requestAccounts = function ()
 {
 	Ajax.send('GetUserAccounts', {'UserId': this.iUserId}, function (oResponse) {
 		if (_.isArray(oResponse.Result))
@@ -157,7 +157,7 @@ CAccountsSettingsView.prototype.requestAccounts = function ()
  * @param {string} sEntityType Current entity type.
  * @param {number} iEntityId Indentificator of current intity.
  */
-CAccountsSettingsView.prototype.setAccessLevel = function (sEntityType, iEntityId)
+CStandardAccountsSettingsFormView.prototype.setAccessLevel = function (sEntityType, iEntityId)
 {
 	this.visible(sEntityType === 'User');
 	if (this.iUserId !== iEntityId)
@@ -182,7 +182,7 @@ CAccountsSettingsView.prototype.setAccessLevel = function (sEntityType, iEntityI
  * @param {number} iAccountId Identifier of basic account that should be deleted.
  * @param {string} sLogin Login of basic account that should be deleted. Uses in confirm popup text.
  */
-CAccountsSettingsView.prototype.confirmAccountDeleting = function (iAccountId, sLogin)
+CStandardAccountsSettingsFormView.prototype.confirmAccountDeleting = function (iAccountId, sLogin)
 {
 	Popups.showPopup(ConfirmPopup, [TextUtils.i18n('%MODULENAME%/CONFIRM_DELETE_ACCOUNT'), _.bind(this.deleteAccount, this, iAccountId), sLogin]);
 };
@@ -193,7 +193,7 @@ CAccountsSettingsView.prototype.confirmAccountDeleting = function (iAccountId, s
  * @param {number} iAccountId Identifier of basic account that should be deleted.
  * @param {boolean} bDelete Indicates if administrator confirmed account deleting or not.
  */
-CAccountsSettingsView.prototype.deleteAccount = function (iAccountId, bDelete)
+CStandardAccountsSettingsFormView.prototype.deleteAccount = function (iAccountId, bDelete)
 {
 	if (bDelete)
 	{
@@ -216,7 +216,7 @@ CAccountsSettingsView.prototype.deleteAccount = function (iAccountId, bDelete)
  * 
  * @param {number} iAccountId Identifier of basic account that should be deleted.
  */
-CAccountsSettingsView.prototype.openEditAccountForm = function (iAccountId)
+CStandardAccountsSettingsFormView.prototype.openEditAccountForm = function (iAccountId)
 {
 	var oAccount = _.find(this.accounts(), function (oAccount) {
 		return oAccount.id === iAccountId;
@@ -245,7 +245,7 @@ CAccountsSettingsView.prototype.openEditAccountForm = function (iAccountId)
 /**
  * Validates input data and sends request to the server to create new basic account or update existing basic account.
  */
-CAccountsSettingsView.prototype.saveAccount = function ()
+CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 {
 	if (this.login() === '')
 	{
@@ -295,10 +295,10 @@ CAccountsSettingsView.prototype.saveAccount = function ()
 /**
  * Hides edit account form.
  */
-CAccountsSettingsView.prototype.hideEditAccountForm = function ()
+CStandardAccountsSettingsFormView.prototype.hideEditAccountForm = function ()
 {
 	this.currentAccountId(0);
 	this.visibleCreateForm(false);
 };
 
-module.exports = new CAccountsSettingsView();
+module.exports = new CStandardAccountsSettingsFormView();
