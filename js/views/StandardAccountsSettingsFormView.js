@@ -117,10 +117,10 @@ CStandardAccountsSettingsFormView.prototype.ViewConstructorName = 'CStandardAcco
 /**
  * Runs after routing to this view.
  */
-CStandardAccountsSettingsFormView.prototype.onRoute = function ()
+CStandardAccountsSettingsFormView.prototype.onShow = function ()
 {
 	this.requestAccounts();
-	App.broadcastEvent('CStandardAccountsSettingsFormView::onRoute::after', {'Name': this.ViewConstructorName, 'View': this});
+	App.broadcastEvent('CStandardAccountsSettingsFormView::onShow::after', {'Name': this.ViewConstructorName, 'View': this});
 };
 
 /**
