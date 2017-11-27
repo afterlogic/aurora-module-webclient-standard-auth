@@ -123,6 +123,8 @@ CStandardAccountsSettingsFormView.prototype.onShow = function ()
 	App.broadcastEvent('CStandardAccountsSettingsFormView::onShow::after', {'Name': this.ViewConstructorName, 'View': this});
 };
 
+CStandardAccountsSettingsFormView.prototype.onRouteChild = CStandardAccountsSettingsFormView.prototype.onShow;
+
 /**
  * Requests basic accounts for current user.
  */
