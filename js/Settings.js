@@ -13,9 +13,11 @@ module.exports = {
 	userAccountsCount: ko.observable(0),
 	
 	/**
-	 * Initializes settings.
+	 * Initializes settings from AppData object sections.
+	 * 
+	 * @param {Object} oAppData Object contained modules settings.
 	 */
-	init: function ()
+	init: function (oAppData)
 	{
 		App.registerUserAccountsCount(this.userAccountsCount);
 	}

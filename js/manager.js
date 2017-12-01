@@ -15,7 +15,7 @@ module.exports = function (oAppData) {
 		bNormalUser = App.getUserRole() === Enums.UserRole.NormalUser
 	;
 	
-	Settings.init();
+	Settings.init(oAppData);
 	
 	if (bAdminUser)
 	{
