@@ -57,6 +57,9 @@ module.exports = function (oAppData) {
 					if (oParams.Request.Module === Settings.ServerModuleName && oParams.Request.Method === 'GetUserAccounts')
 					{
 						Settings.userAccountsCount(_.isArray(oParams.Response.Result) ? oParams.Response.Result.length : 0);
+						Settings.accountsEmails(_.isArray(oParams.Response.Result) ? _.map(oParams.Response.Result, function (oAccount) {
+							return oAccount.login || '';
+						}) : 0);
 					}
 				});
 				

@@ -92,7 +92,6 @@ function CStandardAccountsSettingsFormView()
 		Ajax.send('CreateAuthenticatedUserAccount', {'Login': oParams.Login, 'Password': oParams.Password}, _.bind(function (oResponse) {
 			if (oResponse.Result)
 			{
-				oParams.SuccessCallback();
 				this.accounts.push({
 					id: oResponse.Result.EntityId,
 					login: oParams.Login

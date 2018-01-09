@@ -11,6 +11,7 @@ module.exports = {
 	HashModuleName: 'standardauth',
 	
 	userAccountsCount: ko.observable(0),
+	accountsEmails: ko.observableArray([]),
 	
 	/**
 	 * Initializes settings from AppData object sections.
@@ -20,5 +21,6 @@ module.exports = {
 	init: function (oAppData)
 	{
 		App.registerUserAccountsCount(this.userAccountsCount);
+		App.registerAccountsWithPass(this.accountsEmails);
 	}
 };
