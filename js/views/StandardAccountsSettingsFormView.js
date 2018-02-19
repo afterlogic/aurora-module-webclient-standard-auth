@@ -263,7 +263,7 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 	}
 	else if (this.currentAccountId() === 0)
 	{
-		Ajax.send('CreateUserAccount', {'UserId': this.iUserId, 'Login': this.login(), 'Password': this.pass()}, function (oResponse) {
+		Ajax.send('CreateAuthenticatedUserAccount', {'Login': this.login(), 'Password': this.pass()}, function (oResponse) {
 			if (oResponse.Result)
 			{
 				Screens.showReport(TextUtils.i18n('%MODULENAME%/REPORT_CREATE_ACCOUNT'));
