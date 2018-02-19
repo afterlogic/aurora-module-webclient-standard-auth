@@ -105,6 +105,17 @@ function CStandardAccountsSettingsFormView()
 		}, this));
 	}, this));
 	
+	App.subscribeEvent('ReceiveAjaxResponse::after', _.bind(function (oParams) {
+		if (oParams.Request.Module === 'AdminPanelWebclient' && oParams.Request.Method === 'GetEntity')
+		{
+			if (oParams.Response.Result && oParams.Request.Parameters.Id === this.iUserId)
+			{
+				this.sUserPublicId = oParams.Response.Result.PublicId;
+				this.login(this.sUserPublicId);
+			}
+		}
+	}, this));
+	
 	App.broadcastEvent('%ModuleName%::ConstructView::after', {'Name': this.ViewConstructorName, 'View': this});
 }
 
@@ -167,13 +178,6 @@ CStandardAccountsSettingsFormView.prototype.setAccessLevel = function (sEntityTy
 		this.hideEditAccountForm();
 		this.iUserId = iEntityId || -1;
 		this.sUserPublicId = '';
-		CoreAjax.send('Core', 'GetUser', {'UserId': this.iUserId}, _.bind(function (oResponse, oRequest) {
-			if (oResponse.Result && oRequest.Parameters.UserId === this.iUserId)
-			{
-				this.sUserPublicId = oResponse.Result.PublicId;
-				this.login(this.sUserPublicId);
-			}
-		}, this));
 	}
 };
 
