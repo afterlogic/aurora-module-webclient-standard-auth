@@ -44,7 +44,7 @@ module.exports = function (oAppData) {
 						);
 					},
 					Settings.HashModuleName + '-accounts',
-					TextUtils.i18n('%MODULENAME%/LABEL_BASIC_ACCOUNTS_TAB')
+					TextUtils.i18n('%MODULENAME%/ADMIN_PANEL_TAB_LABEL')
 				]);
 			}
 		};
@@ -72,7 +72,7 @@ module.exports = function (oAppData) {
 				ModulesManager.run('SettingsWebclient', 'registerSettingsTab', [
 					function () { return require('modules/%ModuleName%/js/views/StandardAccountsSettingsFormView.js'); },
 					Settings.HashModuleName + '-accounts',
-					TextUtils.i18n('%MODULENAME%/LABEL_BASIC_ACCOUNTS_TAB')
+					TextUtils.i18n('%MODULENAME%/USER_SETTINGS_TAB_LABEL')
 				]);
 			}
 		};
