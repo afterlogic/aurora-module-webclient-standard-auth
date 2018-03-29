@@ -2,6 +2,7 @@
 
 var
 	_ = require('underscore'),
+	$ = require('jquery'),
 	ko = require('knockout'),
 	
 	TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
@@ -11,7 +12,6 @@ var
 	
 	Api = require('%PathToCoreWebclientModule%/js/Api.js'),
 	App = require('%PathToCoreWebclientModule%/js/App.js'),
-	CoreAjax = require('%PathToCoreWebclientModule%/js/Ajax.js'),
 	ModulesManager = require('%PathToCoreWebclientModule%/js/ModulesManager.js'),
 	Screens = require('%PathToCoreWebclientModule%/js/Screens.js'),
 	CAbstractSettingsFormView,
@@ -252,22 +252,26 @@ CStandardAccountsSettingsFormView.prototype.openEditAccountForm = function (iAcc
  */
 CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 {
-	if (this.login() === '')
+	var
+		sLogin = $.trim(this.login()),
+		sPass = $.trim(this.pass())
+	;
+	if (sLogin === '')
 	{
 		this.loginFocus(true);
 	}
-	else if (this.pass() === '' || this.pass() === this.sFakePass)
+	else if (sPass === '' || sPass === this.sFakePass)
 	{
 		this.passFocus(true);
 	}
-	else if (this.pass() !== this.confirmPass())
+	else if (sPass !== $.trim(this.confirmPass()))
 	{
 		Screens.showError(TextUtils.i18n('COREWEBCLIENT/ERROR_PASSWORDS_DO_NOT_MATCH'));
 		this.confirmPassFocus(true);
 	}
 	else if (this.currentAccountId() === 0)
 	{
-		Ajax.send('CreateAuthenticatedUserAccount', {'Login': this.login(), 'Password': this.pass()}, function (oResponse) {
+		Ajax.send('CreateAuthenticatedUserAccount', {'Login': sLogin, 'Password': sPass}, function (oResponse) {
 			if (oResponse.Result)
 			{
 				Screens.showReport(TextUtils.i18n('%MODULENAME%/REPORT_CREATE_ACCOUNT'));
@@ -282,7 +286,7 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 	}
 	else
 	{
-		Ajax.send('UpdateAccount', {'AccountId': this.currentAccountId(), 'Password': this.pass()}, function (oResponse) {
+		Ajax.send('UpdateAccount', {'AccountId': this.currentAccountId(), 'Password': sPass}, function (oResponse) {
 			if (oResponse.Result)
 			{
 				Screens.showReport(TextUtils.i18n('%MODULENAME%/REPORT_UPDATE_ACCOUNT'));
