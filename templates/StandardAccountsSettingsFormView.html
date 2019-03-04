@@ -14,13 +14,13 @@
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_PASSWORD'}"></span>
 				<span class="value">
-					<input class="input" type="password" data-bind="value: pass, hasFocus: passFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
+					<input class="input" autocomplete="new-password" type="password" data-bind="value: pass, hasFocus: passFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_CONFIRM_PASSWORD'}"></span>
 				<span class="value">
-					<input class="input" type="password" data-bind="value: confirmPass, hasFocus: confirmPassFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
+					<input class="input" autocomplete="new-password" type="password" data-bind="value: confirmPass, hasFocus: confirmPassFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
 			{%INCLUDE-START/Edit-Standard-Account-After/INCLUDE-END%}
