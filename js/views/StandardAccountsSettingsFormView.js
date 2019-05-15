@@ -79,7 +79,7 @@ function CStandardAccountsSettingsFormView()
 	this.visibleCreateForm = ko.observable(false);
 	this.isCreating = ko.observable(false);
 	
-	if (App.getUserRole() === Enums.UserRole.NormalUser)
+	if (App.isUserNormalOrTenant())
 	{
 		this.requestAccounts();
 		
