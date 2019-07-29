@@ -106,7 +106,7 @@ function CStandardAccountsSettingsFormView()
 	}, this));
 	
 	App.subscribeEvent('ReceiveAjaxResponse::after', _.bind(function (oParams) {
-		if (oParams.Request.Module === 'AdminPanelWebclient' && oParams.Request.Method === 'GetEntity')
+		if (oParams.Request.Module === 'Core' && oParams.Request.Method === 'GetUser')
 		{
 			if (oParams.Response.Result && oParams.Request.Parameters.Id === this.iUserId)
 			{
