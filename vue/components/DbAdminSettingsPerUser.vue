@@ -143,61 +143,69 @@ export default {
       if (this.password !== this.confirmPassword) {
         notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
       } else {
-        this.saving = true
-        const parameters = {
-          AccountId: this.account?.id,
-          TenantId: this.user.tenantId,
-          Password: this.password,
-        }
-        webApi.sendRequest({
-          moduleName: 'StandardAuth',
-          methodName: 'UpdateAccount',
-          parameters
-        }).then(result => {
-          this.saving = false
-          if (result) {
-            this.savedPass = this.password
-            this.savedPass = this.password
-            this.savedConfirmPass = this.password
-            this.populate()
-            notification.showReport(this.$t('COREWEBCLIENT.REPORT_SETTINGS_UPDATE_SUCCESS'))
-          } else {
-            notification.showError(this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED'))
+        if (this.password.length) {
+          if (!this.saving) {
+            this.saving = true
+            const parameters = {
+              AccountId: this.account?.id,
+              TenantId: this.user.tenantId,
+              Password: this.password,
+            }
+            webApi.sendRequest({
+              moduleName: 'StandardAuth',
+              methodName: 'UpdateAccount',
+              parameters
+            }).then(result => {
+              this.saving = false
+              if (result) {
+                this.savedPass = this.password
+                this.savedPass = this.password
+                this.savedConfirmPass = this.password
+                this.populate()
+                notification.showReport(this.$t('COREWEBCLIENT.REPORT_SETTINGS_UPDATE_SUCCESS'))
+              } else {
+                notification.showError(this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED'))
+              }
+            }, response => {
+              this.saving = false
+              notification.showError(errors.getTextFromResponse(response, this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED')))
+            })
           }
-        }, response => {
-          this.saving = false
-          notification.showError(errors.getTextFromResponse(response, this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED')))
-        })
+        }
       }
     },
     createSettingsForEntity () {
       if (this.password !== this.confirmPassword) {
         notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
       } else {
-        this.saving = true
-        const parameters = {
-          Login: this.login,
-          TenantId: this.user.tenantId,
-          Password: this.password,
-        }
-        webApi.sendRequest({
-          moduleName: 'StandardAuth',
-          methodName: 'CreateAuthenticatedUserAccount',
-          parameters
-        }).then(result => {
-          this.saving = false
-          if (result) {
-            this.savedPass = this.password
-            this.savedConfirmPass = this.password
-            this.populate()
-            notification.showReport(this.$t('COREWEBCLIENT.REPORT_SETTINGS_UPDATE_SUCCESS'))
-          } else {
-            notification.showError(this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED'))
+        if (this.password.length) {
+          if (!this.saving) {
+            this.saving = true
+            const parameters = {
+              Login: this.login,
+              TenantId: this.user.tenantId,
+              Password: this.password,
+            }
+            webApi.sendRequest({
+              moduleName: 'StandardAuth',
+              methodName: 'CreateAuthenticatedUserAccount',
+              parameters
+            }).then(result => {
+              this.saving = false
+              if (result) {
+                this.savedPass = this.password
+                this.savedConfirmPass = this.password
+                this.populate()
+                notification.showReport(this.$t('COREWEBCLIENT.REPORT_SETTINGS_UPDATE_SUCCESS'))
+              } else {
+                notification.showError(this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED'))
+              }
+            }, response => {
+              this.saving = false
+              notification.showError(errors.getTextFromResponse(response, this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED')))
+            })
           }
-        }, response => {
-          this.saving = false
-          notification.showError(errors.getTextFromResponse(response, this.$t('COREWEBCLIENT.ERROR_SAVING_SETTINGS_FAILED')))
-        })
+        }
       }
     },
     getUserAccounts () {
