@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="q-ml-md col-5">
-                <q-input outlined dense class="bg-white q-ml-sm" type="password" v-model="password"/>
+                <q-input outlined dense class="bg-white q-ml-sm" ref="password" type="password" v-model="password"/>
             </div>
           </div>
           <div class="row q-pb-md">
@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="q-ml-md col-5">
-                <q-input outlined dense class="bg-white q-ml-sm" type="password" v-model="confirmPassword"/>
+                <q-input outlined dense class="bg-white q-ml-sm" ref="confirmPassword" type="password" v-model="confirmPassword"/>
             </div>
           </div>
         </q-card-section>
@@ -96,11 +96,11 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    $route (to, from) {
       this.parseRoute()
     },
   },
-  mounted() {
+  mounted () {
     this.parseRoute()
   },
   beforeRouteLeave (to, from, next) {
@@ -140,10 +140,10 @@ export default {
       })
     },
     updateSettingsForEntity () {
-      if (this.password !== this.confirmPassword) {
-        notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
-      } else {
-        if (this.password.length) {
+      if (this.password.length && this.confirmPassword.length) {
+        if (this.password !== this.confirmPassword) {
+          notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
+        } else {
           if (!this.saving) {
             this.saving = true
             const parameters = {
@@ -172,13 +172,20 @@ export default {
             })
           }
         }
+      } else {
+        notification.showError(this.$t('MAILDOMAINS.ERROR_PASSWORD_EMPTY'))
+        if (!this.password.length) {
+          this.$refs.password.focus()
+        } else {
+          this.$refs.confirmPassword.focus()
+        }
       }
     },
     createSettingsForEntity () {
-      if (this.password !== this.confirmPassword) {
-        notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
-      } else {
-        if (this.password.length) {
+      if (this.password.length && this.confirmPassword.length) {
+        if (this.password !== this.confirmPassword) {
+          notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
+        } else {
           if (!this.saving) {
             this.saving = true
             const parameters = {
@@ -206,6 +213,8 @@ export default {
             })
           }
         }
+      } else {
+        notification.showError(this.$t('MAILDOMAINS.ERROR_PASSWORD_EMPTY'))
       }
     },
     getUserAccounts () {
