@@ -1,8 +1,8 @@
 <template>
   <q-scroll-area class="full-height full-width">
-    <div class="q-pa-md" v-if="!loading">
+    <div class="q-pa-lg" v-if="!loading">
       <div class="row q-mb-md">
-        <div class="col text-h5"> <div class="q-my-sm">{{ $t('STANDARDAUTHWEBCLIENT.USER_SETTINGS_TAB_HEADING') }}</div></div>
+        <div class="col text-h5">{{$t('STANDARDAUTHWEBCLIENT.USER_SETTINGS_TAB_HEADING') }}</div>
       </div>
       <q-card flat bordered class="card-edit-settings">
         <q-card-section>
@@ -13,32 +13,32 @@
             <div class="col text-h6">{{ $t('STANDARDAUTHWEBCLIENT.HEADING_EDIT_NEW_ACCOUNT') }}</div>
           </div>
           <div class="row q-pb-md">
-            <div class="col-3">
+            <div class="col-1">
               <div class="q-my-sm">
                 {{ $t('COREWEBCLIENT.LABEL_LOGIN') }}
               </div>
             </div>
-            <div class="q-ml-md col-5">
+            <div class="col-5">
                 <q-input outlined dense class="bg-white q-ml-sm" v-model="login" disable/>
             </div>
           </div>
           <div class="row q-pb-md">
-            <div class="col-3">
+            <div class="col-1">
               <div class="q-my-sm">
                 {{ $t('COREWEBCLIENT.LABEL_PASSWORD') }}
               </div>
             </div>
-            <div class="q-ml-md col-5">
+            <div class="col-5">
                 <q-input outlined dense class="bg-white q-ml-sm" ref="password" type="password" v-model="password"/>
             </div>
           </div>
           <div class="row q-pb-md">
-            <div class="col-3">
+            <div class="col-1">
               <div class="q-my-sm">
                 {{ $t('STANDARDAUTHWEBCLIENT.LABEL_CONFIRM_PASS') }}
               </div>
             </div>
-            <div class="q-ml-md col-5">
+            <div class="col-5">
                 <q-input outlined dense class="bg-white q-ml-sm" ref="confirmPassword" type="password" v-model="confirmPassword"/>
             </div>
           </div>
