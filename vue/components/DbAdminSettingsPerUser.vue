@@ -218,6 +218,7 @@ export default {
       }
     },
     getUserAccounts () {
+      this.loading = true
       const parameters = {
         UserId: this.user?.id,
         TenantId: this.user?.tenantId,
@@ -227,6 +228,7 @@ export default {
         methodName: 'GetUserAccounts',
         parameters
       }).then(result => {
+        this.loading = false
         if (result.length) {
           if (!this.confirmPassword) {
             this.password = FAKE_PASS
