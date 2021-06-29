@@ -6,7 +6,7 @@
       </div>
       <q-card flat bordered class="card-edit-settings">
         <q-card-section>
-          <div v-if="!isHaveAccount" class="row q-mb-md">
+          <div v-if="!hasAccount" class="row q-mb-md">
             <div class="col text-h6">{{ $t('STANDARDAUTHWEBCLIENT.HEADING_CREATE_FIRST_ACCOUNT') }}</div>
           </div>
           <div v-else class="row q-mb-md">
@@ -44,12 +44,12 @@
           </div>
         </q-card-section>
       </q-card>
-      <div v-if="!isHaveAccount" class="q-pt-md text-right">
+      <div v-if="!hasAccount" class="q-pt-md text-right">
         <q-btn unelevated no-caps dense class="q-px-sm" :ripple="false" color="primary"
                :label="saving ? $t('STANDARDAUTHWEBCLIENT.ACTION_CREATE_IN_PROGRESS') : $t('STANDARDAUTHWEBCLIENT.ACTION_CREATE')"
                @click="createSettingsForEntity"/>
       </div>
-      <div v-if="isHaveAccount" class="q-pt-md text-right">
+      <div v-if="hasAccount" class="q-pt-md text-right">
         <q-btn unelevated no-caps dense class="q-px-sm" :ripple="false" color="primary"
                :label="saving ? $t('STANDARDAUTHWEBCLIENT.ACTION_UPDATE_IN_PROGRESS') : $t('STANDARDAUTHWEBCLIENT.ACTION_UPDATE')"
                @click="updateSettingsForEntity"/>
@@ -92,7 +92,7 @@ export default {
       login: '',
       loading: false,
       saving: false,
-      isHaveAccount: false
+      hasAccount: false
     }
   },
   watch: {
@@ -114,6 +114,15 @@ export default {
     hasChanges () {
       return this.password !== this.savedPass ||
           this.savedConfirmPass !== this.confirmPassword
+    },
+    isDataValid () {
+      const password = _.trim(this.password)
+      if (password === '') {
+        notification.showError(this.$t('COREWEBCLIENT.ERROR_REQUIRED_FIELDS_EMPTY'))
+        this.$refs.password.focus()
+        return false
+      }
+      return true
     },
     parseRoute () {
       const userId = typesUtils.pPositiveInt(this.$route?.params?.id)
@@ -140,7 +149,7 @@ export default {
       })
     },
     updateSettingsForEntity () {
-      if (this.password.length && this.confirmPassword.length) {
+      if (this.isDataValid()) {
         if (this.password !== this.confirmPassword) {
           notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
         } else {
@@ -159,7 +168,6 @@ export default {
               this.saving = false
               if (result) {
                 this.savedPass = this.password
-                this.savedPass = this.password
                 this.savedConfirmPass = this.password
                 this.populate()
                 notification.showReport(this.$t('COREWEBCLIENT.REPORT_SETTINGS_UPDATE_SUCCESS'))
@@ -172,17 +180,10 @@ export default {
             })
           }
         }
-      } else {
-        notification.showError(this.$t('MAILDOMAINS.ERROR_PASSWORD_EMPTY'))
-        if (!this.password.length) {
-          this.$refs.password.focus()
-        } else {
-          this.$refs.confirmPassword.focus()
-        }
       }
     },
     createSettingsForEntity () {
-      if (this.password.length && this.confirmPassword.length) {
+      if (this.isDataValid()) {
         if (this.password !== this.confirmPassword) {
           notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
         } else {
@@ -213,8 +214,6 @@ export default {
             })
           }
         }
-      } else {
-        notification.showError(this.$t('MAILDOMAINS.ERROR_PASSWORD_EMPTY'))
       }
     },
     getUserAccounts () {
@@ -232,10 +231,10 @@ export default {
             this.password = FAKE_PASS
             this.savedPass = FAKE_PASS
           }
-          this.isHaveAccount = true
+          this.hasAccount = true
           this.account = result.find(account => account.login === this.user.publicId)
         } else {
-          this.isHaveAccount = false
+          this.hasAccount = false
         }
         this.loading = false
       })
