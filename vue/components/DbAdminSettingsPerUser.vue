@@ -55,8 +55,8 @@
                @click="updateSettingsForEntity"/>
       </div>
     </div>
-    <q-inner-loading :showing="loading">
-      <q-spinner size="50px" color="primary" />
+    <q-inner-loading style="justify-content: flex-start;" :showing="loading || saving">
+      <q-linear-progress query class="q-mt-sm" />
     </q-inner-loading>
     <UnsavedChangesDialog ref="unsavedChangesDialog"/>
   </q-scroll-area>
@@ -137,6 +137,7 @@ export default {
       this.loading = true
       const currentTenantId = core.getCurrentTenantId()
       cache.getUser(currentTenantId, this.user.id).then(({ user, userId }) => {
+        this.loading = false
         if (userId === this.user.id) {
           if (user && _.isFunction(user?.getData)) {
             this.user = user
