@@ -15,7 +15,7 @@ export default {
         ],
         title: 'STANDARDAUTHWEBCLIENT.ADMIN_PANEL_TAB_LABEL',
         component () {
-          return import('src/../../../StandardAuthWebclient/vue/components/DbAdminSettingsPerUser')
+          return import('./components/DbAdminSettingsPerUser')
         }
       }
     ]
