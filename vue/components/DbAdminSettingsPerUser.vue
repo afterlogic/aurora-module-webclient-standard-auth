@@ -120,7 +120,8 @@ export default {
         notification.showError(this.$t('COREWEBCLIENT.ERROR_REQUIRED_FIELDS_EMPTY'))
         this.$refs.password.focus()
         return false
-      } else if (password !== this.confirmPassword) {
+      }
+      if (password !== _.trim(this.confirmPassword)) {
         notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
         return false
       }
