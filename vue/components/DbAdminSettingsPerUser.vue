@@ -55,6 +55,8 @@
                @click="updateSettingsForEntity"/>
       </div>
     </div>
+    <component v-for="component in additionalComponents" :key="component.name" v-bind:is="component"
+               :user="user" :loading="loading" />
     <q-inner-loading style="justify-content: flex-start;" :showing="loading || saving">
       <q-linear-progress query />
     </q-inner-loading>
@@ -71,6 +73,7 @@ import typesUtils from 'src/utils/types'
 import webApi from 'src/utils/web-api'
 
 import cache from 'src/cache'
+import eventBus from 'src/event-bus'
 
 import UnsavedChangesDialog from 'src/components/UnsavedChangesDialog'
 
@@ -91,7 +94,9 @@ export default {
       login: '',
       loading: false,
       saving: false,
-      hasAccount: false
+      hasAccount: false,
+
+      additionalComponents: [],
     }
   },
   watch: {
@@ -99,8 +104,20 @@ export default {
       this.parseRoute()
     },
   },
-  mounted () {
+  async mounted () {
     this.parseRoute()
+    const params = {
+      components: []
+    }
+    eventBus.$emit('DbAdminSettingsPerUser::GetAdditionalComponents', params)
+    const additionalComponents = []
+    for (const componentPromise of params.components) {
+      const component = await componentPromise
+      if (component?.default) {
+        additionalComponents.push(component.default)
+      }
+    }
+    this.additionalComponents = additionalComponents
   },
   beforeRouteLeave (to, from, next) {
     if (this.hasChanges() && _.isFunction(this?.$refs?.unsavedChangesDialog?.openConfirmDiscardChangesDialog)) {
