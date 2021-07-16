@@ -60,7 +60,6 @@
     <q-inner-loading style="justify-content: flex-start;" :showing="loading || saving">
       <q-linear-progress query />
     </q-inner-loading>
-    <UnsavedChangesDialog ref="unsavedChangesDialog"/>
   </q-scroll-area>
 </template>
 
@@ -75,15 +74,11 @@ import webApi from 'src/utils/web-api'
 import cache from 'src/cache'
 import eventBus from 'src/event-bus'
 
-import UnsavedChangesDialog from 'src/components/UnsavedChangesDialog'
-
 const FAKE_PASS = '     '
 
 export default {
   name: 'DbAdminSettingsPerUser',
-  components: {
-    UnsavedChangesDialog
-  },
+
   data () {
     return {
       user: null,
@@ -99,11 +94,13 @@ export default {
       additionalComponents: [],
     }
   },
+
   watch: {
     $route (to, from) {
       this.parseRoute()
     },
   },
+
   async mounted () {
     this.parseRoute()
     const params = {
@@ -119,18 +116,30 @@ export default {
     }
     this.additionalComponents = additionalComponents
   },
+
   beforeRouteLeave (to, from, next) {
-    if (this.hasChanges() && _.isFunction(this?.$refs?.unsavedChangesDialog?.openConfirmDiscardChangesDialog)) {
-      this.$refs.unsavedChangesDialog.openConfirmDiscardChangesDialog(next)
-    } else {
-      next()
-    }
+    this.doBeforeRouteLeave(to, from, next)
   },
+
   methods: {
+    /**
+     * Method is used in doBeforeRouteLeave mixin
+     */
     hasChanges () {
       return this.password !== this.savedPass ||
           this.savedConfirmPass !== this.confirmPassword
     },
+
+    /**
+     * Method is used in doBeforeRouteLeave mixin,
+     * do not use async methods - just simple and plain reverting of values
+     * !! hasChanges method must return true after executing revertChanges method
+     */
+    revertChanges () {
+      this.password = this.savedPass
+      this.confirmPassword = this.savedConfirmPass
+    },
+
     isDataValid () {
       const password = _.trim(this.password)
       if (password === '') {
