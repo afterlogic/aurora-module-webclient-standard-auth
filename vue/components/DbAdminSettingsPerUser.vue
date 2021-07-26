@@ -29,7 +29,11 @@
               </div>
             </div>
             <div class="col-5">
-                <q-input outlined dense class="q-ml-sm" bg-color="white" ref="password" type="password" autocomplete="new-password" v-model="password"/>
+                <!-- fake fields are a workaround to prevent auto-filling and saving passwords in Firefox -->
+                <input style="display:none" type="text" name="fakeusernameremembered"/>
+                <input style="display:none" type="password" name="fakepasswordremembered"/>
+                <q-input outlined dense class="q-ml-sm" bg-color="white" ref="password" type="password"
+                         autocomplete="off" v-model="password"/>
             </div>
           </div>
           <div class="row q-pb-md">
@@ -39,7 +43,8 @@
               </div>
             </div>
             <div class="col-5">
-                <q-input outlined dense class="q-ml-sm" bg-color="white" ref="confirmPassword" type="password" autocomplete="new-password" v-model="confirmPassword"/>
+                <q-input outlined dense class="q-ml-sm" bg-color="white" ref="confirmPassword" type="password"
+                         autocomplete="off" v-model="confirmPassword"/>
             </div>
           </div>
         </q-card-section>
@@ -149,6 +154,7 @@ export default {
       }
       if (password !== _.trim(this.confirmPassword)) {
         notification.showError(this.$t('COREWEBCLIENT.ERROR_PASSWORDS_DO_NOT_MATCH'))
+        this.$refs.confirmPassword.focus()
         return false
       }
       return true
