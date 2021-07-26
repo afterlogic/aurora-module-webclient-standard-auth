@@ -13,7 +13,7 @@
             <div class="col text-h6">{{ $t('STANDARDAUTHWEBCLIENT.HEADING_EDIT_NEW_ACCOUNT') }}</div>
           </div>
           <div class="row q-pb-md">
-            <div class="col-1">
+            <div class="col-2">
               <div class="q-my-sm">
                 {{ $t('COREWEBCLIENT.LABEL_LOGIN') }}
               </div>
@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="row q-pb-md">
-            <div class="col-1">
+            <div class="col-2">
               <div class="q-my-sm">
                 {{ $t('COREWEBCLIENT.LABEL_PASSWORD') }}
               </div>
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="row q-pb-md">
-            <div class="col-1">
+            <div class="col-2">
               <div class="q-my-sm">
                 {{ $t('STANDARDAUTHWEBCLIENT.LABEL_CONFIRM_PASS') }}
               </div>
