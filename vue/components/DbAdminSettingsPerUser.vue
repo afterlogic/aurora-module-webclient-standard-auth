@@ -29,8 +29,8 @@
               </div>
             </div>
             <div class="col-5">
-                <q-input outlined dense class="q-ml-sm" bg-color="white" ref="password" type="password"
-                         autocomplete="new-password" v-model="password"/>
+                <q-input outlined dense class="q-ml-sm" bg-color="white" type="password" autocomplete="new-password"
+                         v-model="password" ref="password" />
             </div>
           </div>
           <div class="row q-pb-md">
@@ -40,8 +40,8 @@
               </div>
             </div>
             <div class="col-5">
-                <q-input outlined dense class="q-ml-sm" bg-color="white" ref="confirmPassword" type="password"
-                         autocomplete="new-password" v-model="confirmPassword"/>
+                <q-input outlined dense class="q-ml-sm" bg-color="white" type="password" autocomplete="new-password"
+                         v-model="confirmPassword" ref="confirmPassword" />
             </div>
           </div>
         </q-card-section>
