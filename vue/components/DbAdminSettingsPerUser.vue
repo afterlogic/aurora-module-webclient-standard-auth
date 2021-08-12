@@ -29,11 +29,8 @@
               </div>
             </div>
             <div class="col-5">
-                <!-- fake fields are a workaround to prevent auto-filling and saving passwords in Firefox -->
-                <input style="display:none" type="text" name="fakeusernameremembered"/>
-                <input style="display:none" type="password" name="fakepasswordremembered"/>
                 <q-input outlined dense class="q-ml-sm" bg-color="white" ref="password" type="password"
-                         autocomplete="off" v-model="password"/>
+                         autocomplete="new-password" v-model="password"/>
             </div>
           </div>
           <div class="row q-pb-md">
@@ -44,7 +41,7 @@
             </div>
             <div class="col-5">
                 <q-input outlined dense class="q-ml-sm" bg-color="white" ref="confirmPassword" type="password"
-                         autocomplete="off" v-model="confirmPassword"/>
+                         autocomplete="new-password" v-model="confirmPassword"/>
             </div>
           </div>
         </q-card-section>
