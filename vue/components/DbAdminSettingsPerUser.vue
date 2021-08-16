@@ -33,7 +33,7 @@
                          v-model="password" ref="password" />
             </div>
           </div>
-          <div class="row q-pb-md">
+          <div class="row">
             <div class="col-2">
               <div class="q-my-sm">
                 {{ $t('STANDARDAUTHWEBCLIENT.LABEL_CONFIRM_PASS') }}
