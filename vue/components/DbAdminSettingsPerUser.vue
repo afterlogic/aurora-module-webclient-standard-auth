@@ -48,12 +48,12 @@
       </q-card>
       <div v-if="!hasAccount" class="q-pt-md text-right">
         <q-btn unelevated no-caps dense class="q-px-sm" :ripple="false" color="primary"
-               :label="saving ? $t('STANDARDAUTHWEBCLIENT.ACTION_CREATE_IN_PROGRESS') : $t('STANDARDAUTHWEBCLIENT.ACTION_CREATE')"
+               :label="$t('STANDARDAUTHWEBCLIENT.ACTION_CREATE')"
                @click="createSettingsForEntity"/>
       </div>
       <div v-if="hasAccount" class="q-pt-md text-right">
         <q-btn unelevated no-caps dense class="q-px-sm" :ripple="false" color="primary"
-               :label="saving ? $t('STANDARDAUTHWEBCLIENT.ACTION_UPDATE_IN_PROGRESS') : $t('STANDARDAUTHWEBCLIENT.ACTION_UPDATE')"
+               :label="$t('STANDARDAUTHWEBCLIENT.ACTION_UPDATE')"
                @click="updateSettingsForEntity"/>
       </div>
     </div>
