@@ -1,17 +1,11 @@
 <template>
   <q-scroll-area class="full-height full-width">
-    <div class="q-pa-lg" v-if="!loading">
+    <div class="q-pa-lg">
       <div class="row q-mb-md">
         <div class="col text-h5">{{$t('STANDARDAUTHWEBCLIENT.USER_SETTINGS_TAB_HEADING') }}</div>
       </div>
       <q-card flat bordered class="card-edit-settings">
         <q-card-section>
-          <div v-if="!hasAccount" class="row q-mb-md">
-            <div class="col text-h6">{{ $t('STANDARDAUTHWEBCLIENT.HEADING_CREATE_FIRST_ACCOUNT') }}</div>
-          </div>
-          <div v-else class="row q-mb-md">
-            <div class="col text-h6">{{ $t('STANDARDAUTHWEBCLIENT.HEADING_EDIT_NEW_ACCOUNT') }}</div>
-          </div>
           <div class="row q-pb-md">
             <div class="col-2">
               <div class="q-my-sm">
@@ -48,12 +42,12 @@
       </q-card>
       <div v-if="!hasAccount" class="q-pt-md text-right">
         <q-btn unelevated no-caps dense class="q-px-sm" :ripple="false" color="primary"
-               :label="$t('STANDARDAUTHWEBCLIENT.ACTION_CREATE')"
+               :label="$t('COREWEBCLIENT.ACTION_SAVE')"
                @click="createSettingsForEntity"/>
       </div>
       <div v-if="hasAccount" class="q-pt-md text-right">
         <q-btn unelevated no-caps dense class="q-px-sm" :ripple="false" color="primary"
-               :label="$t('STANDARDAUTHWEBCLIENT.ACTION_UPDATE')"
+               :label="$t('COREWEBCLIENT.ACTION_SAVE')"
                @click="updateSettingsForEntity"/>
       </div>
     </div>
