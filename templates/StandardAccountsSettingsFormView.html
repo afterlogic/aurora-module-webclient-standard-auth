@@ -8,7 +8,9 @@
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_LOGIN'}"></span>
 				<span class="value">
-					<input class="input disabled" type="text" data-bind="value: login, hasFocus: loginFocus, enable: false, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
+					<input class="input" type="text" data-bind="value: login, hasFocus: loginFocus,
+							css: {'disabled': currentAccountId() !== 0},
+							enable: currentAccountId() === 0, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
 			<div class="row">
