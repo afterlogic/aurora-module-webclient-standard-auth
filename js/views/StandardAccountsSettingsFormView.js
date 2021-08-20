@@ -111,7 +111,10 @@ function CStandardAccountsSettingsFormView()
 			if (oParams.Response.Result && oParams.Request.Parameters.Id === this.iUserId)
 			{
 				this.sUserPublicId = oParams.Response.Result.PublicId;
-				this.login(this.sUserPublicId);
+				if (this.login() === '')
+				{
+					this.login(this.sUserPublicId);
+				}
 			}
 		}
 	}, this));
@@ -129,6 +132,7 @@ CStandardAccountsSettingsFormView.prototype.ViewConstructorName = 'CStandardAcco
  */
 CStandardAccountsSettingsFormView.prototype.onShow = function ()
 {
+	this.login('');
 	this.requestAccounts();
 	App.broadcastEvent('CStandardAccountsSettingsFormView::onShow::after', {'Name': this.ViewConstructorName, 'View': this});
 };
