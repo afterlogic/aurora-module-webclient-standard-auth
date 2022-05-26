@@ -1,3 +1,5 @@
+import DbAdminSettingsPerUser from './components/DbAdminSettingsPerUser'
+
 export default {
   moduleName: 'StandardAuthWebclient',
 
@@ -6,17 +8,14 @@ export default {
   getAdminUserTabs () {
     return [
       {
-        tabName: 'standardauth-accounts',
-        paths: [
-          'id/:id/standardauth-accounts',
-          'search/:search/id/:id/standardauth-accounts',
-          'page/:page/id/:id/standardauth-accounts',
-          'search/:search/page/:page/id/:id/standardauth-accounts',
+        tabName: 'db-auth',
+        tabTitle: 'STANDARDAUTHWEBCLIENT.ADMIN_PANEL_TAB_LABEL',
+        tabRouteChildren: [
+          { path: 'id/:id/db-auth', component: DbAdminSettingsPerUser },
+          { path: 'search/:search/id/:id/db-auth', component: DbAdminSettingsPerUser },
+          { path: 'page/:page/id/:id/db-auth', component: DbAdminSettingsPerUser },
+          { path: 'search/:search/page/:page/id/:id/db-auth', component: DbAdminSettingsPerUser },
         ],
-        title: 'STANDARDAUTHWEBCLIENT.ADMIN_PANEL_TAB_LABEL',
-        component () {
-          return import('./components/DbAdminSettingsPerUser')
-        }
       }
     ]
   },
