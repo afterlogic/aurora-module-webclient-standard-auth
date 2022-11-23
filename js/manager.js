@@ -10,9 +10,7 @@ module.exports = function (oAppData) {
 		App = require('%PathToCoreWebclientModule%/js/App.js'),
 		ModulesManager = require('%PathToCoreWebclientModule%/js/ModulesManager.js'),
 		
-		Settings = require('modules/%ModuleName%/js/Settings.js'),
-		
-		bAdminUser = App.getUserRole() === Enums.UserRole.SuperAdmin
+		Settings = require('modules/%ModuleName%/js/Settings.js')
 	;
 	
 	Settings.init(oAppData);
@@ -20,33 +18,6 @@ module.exports = function (oAppData) {
 	if (!ModulesManager.isModuleAvailable(Settings.ServerModuleName))
 	{
 		return null;
-	}
-	
-	if (bAdminUser)
-	{
-		return {
-			/**
-			 * Runs after app initializing. Adds standard auth tab to admin panel.
-			 * 
-			 * @param {Object} ModulesManager Modules manager object.
-			 */
-			start: function (ModulesManager) {
-				ModulesManager.run('AdminPanelWebclient', 'registerAdminPanelTab', [
-					//callback for promise
-					function(resolve) {
-						require.ensure(
-							['modules/%ModuleName%/js/views/StandardAccountsSettingsFormView.js'],
-							function() {
-								resolve(require('modules/%ModuleName%/js/views/StandardAccountsSettingsFormView.js'));
-							},
-							"admin-bundle"
-						);
-					},
-					Settings.HashModuleName + '-accounts',
-					TextUtils.i18n('%MODULENAME%/ADMIN_PANEL_TAB_LABEL')
-				]);
-			}
-		};
 	}
 	
 	if (App.isUserNormalOrTenant())

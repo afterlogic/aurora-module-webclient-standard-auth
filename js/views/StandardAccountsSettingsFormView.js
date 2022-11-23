@@ -22,14 +22,14 @@ var
 	Settings = require('modules/%ModuleName%/js/Settings.js')
 ;
 
-if (App.getUserRole() === Enums.UserRole.SuperAdmin)
-{
-	CAbstractSettingsFormView = ModulesManager.run('AdminPanelWebclient', 'getAbstractSettingsFormViewClass');
-}
-else
-{
+// if (App.getUserRole() === Enums.UserRole.SuperAdmin)
+// {
+// 	CAbstractSettingsFormView = ModulesManager.run('AdminPanelWebclient', 'getAbstractSettingsFormViewClass');
+// }
+// else
+// {
 	CAbstractSettingsFormView = ModulesManager.run('SettingsWebclient', 'getAbstractSettingsFormViewClass');
-}
+// }
 
 /**
 * @constructor for object that is bound to screen with basic account list 
