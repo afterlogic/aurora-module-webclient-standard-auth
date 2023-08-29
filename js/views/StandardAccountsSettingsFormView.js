@@ -22,14 +22,7 @@ var
 	Settings = require('modules/%ModuleName%/js/Settings.js')
 ;
 
-// if (App.getUserRole() === Enums.UserRole.SuperAdmin)
-// {
-// 	CAbstractSettingsFormView = ModulesManager.run('AdminPanelWebclient', 'getAbstractSettingsFormViewClass');
-// }
-// else
-// {
-	CAbstractSettingsFormView = ModulesManager.run('SettingsWebclient', 'getAbstractSettingsFormViewClass');
-// }
+CAbstractSettingsFormView = ModulesManager.run('SettingsWebclient', 'getAbstractSettingsFormViewClass');
 
 /**
 * @constructor for object that is bound to screen with basic account list 
@@ -39,6 +32,9 @@ function CStandardAccountsSettingsFormView()
 {
 	CAbstractSettingsFormView.call(this, UserSettings.ServerModuleName);
 
+	this.visibleHeading = ko.observable(true) // Can be changed by SecuritySettingsWebclient module
+	this.bSecurityScreenEmbeded = false // is redefined by SecuritySettingsWebclient module
+
 	this.sFakePass = 'xxxxxxxx'; // fake password uses to display something in password input while account editing
 	
 	this.iUserId = App.getUserId(); // current user identifier
@@ -47,17 +43,17 @@ function CStandardAccountsSettingsFormView()
 	this.currentAccountId = ko.observable(0); // current account identifier
 	
 	//heading text for account create form
-	this.createAccountHeading = ko.computed(function () {
-		if (this.accounts().length === 0)
-		{
-			return TextUtils.i18n('%MODULENAME%/HEADING_CREATE_FIRST_ACCOUNT');
-		}
-		if (this.currentAccountId() === 0)
-		{
-			return TextUtils.i18n('%MODULENAME%/HEADING_CREATE_NEW_ACCOUNT');
-		}
-		return TextUtils.i18n('%MODULENAME%/HEADING_EDIT_NEW_ACCOUNT');
-	}, this);
+	// this.createAccountHeading = ko.computed(function () {
+	// 	if (this.accounts().length === 0)
+	// 	{
+	// 		return TextUtils.i18n('%MODULENAME%/HEADING_CREATE_FIRST_ACCOUNT');
+	// 	}
+	// 	if (this.currentAccountId() === 0)
+	// 	{
+	// 		return TextUtils.i18n('%MODULENAME%/HEADING_CREATE_NEW_ACCOUNT');
+	// 	}
+	// 	return TextUtils.i18n('%MODULENAME%/HEADING_EDIT_NEW_ACCOUNT');
+	// }, this);
 	
 	//text for update/create button
 	this.updateButtonText = ko.computed(function () {
@@ -71,13 +67,13 @@ function CStandardAccountsSettingsFormView()
 
 	this.login = ko.observable(''); // new account login
 	this.loginFocus = ko.observable(false);
+	this.currentPassword = ko.observable('');
 	this.pass = ko.observable(''); // new account password
 	this.passFocus = ko.observable(false);
 	this.confirmPass = ko.observable(''); // new account password
 	this.confirmPassFocus = ko.observable(false);
 	
-	this.visibleCreateForm = ko.observable(false);
-	this.isCreating = ko.observable(false);
+	this.isSaving = ko.observable(false);
 	
 	if (App.isUserNormalOrTenant())
 	{
@@ -248,7 +244,7 @@ CStandardAccountsSettingsFormView.prototype.openEditAccountForm = function (iAcc
 		this.confirmPass('');
 	}
 	
-	this.visibleCreateForm(true);
+	this.isSaving(false);
 };
 
 /**
@@ -258,7 +254,8 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 {
 	var
 		sLogin = $.trim(this.login()),
-		sPass = $.trim(this.pass())
+		sPass = $.trim(this.pass()),
+		sCurrentPassword = $.trim(this.currentPassword())
 	;
 	if (sLogin === '')
 	{
@@ -290,7 +287,15 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 	}
 	else
 	{
-		Ajax.send('UpdateAccount', {'AccountId': this.currentAccountId(), 'Password': sPass}, function (oResponse) {
+		const params = {
+			'AccountId': this.currentAccountId(),
+			'CurrentPassword': sCurrentPassword, 
+			'Password': sPass
+		}
+
+		this.isSaving(true);
+
+		Ajax.send('UpdateAccount', params, function (oResponse) {
 			if (oResponse.Result)
 			{
 				Screens.showReport(TextUtils.i18n('%MODULENAME%/REPORT_UPDATE_ACCOUNT'));
@@ -300,7 +305,8 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 			{
 				Api.showErrorByCode(oResponse, TextUtils.i18n('%MODULENAME%/ERROR_UPDATE_ACCOUNT'));
 			}
-			this.requestAccounts();
+			
+			this.isSaving(false);
 		}, this);
 	}
 };
@@ -311,7 +317,6 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 CStandardAccountsSettingsFormView.prototype.hideEditAccountForm = function ()
 {
 	this.currentAccountId(0);
-	this.visibleCreateForm(false);
 };
 
 module.exports = new CStandardAccountsSettingsFormView();

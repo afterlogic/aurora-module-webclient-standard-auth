@@ -1,18 +1,27 @@
-<div class="panel_top">
+<div class="panel_top" data-bind="visible: !bSecurityScreenEmbeded">
 	<h2 class="settings_heading" data-bind="i18n: {'key': '%MODULENAME%/USER_SETTINGS_TAB_HEADING'}"></h2>
 </div>
+
 <div class="panel_center">
 	<div class="fields">
-		<div class="fieldset" data-bind="visible: visibleCreateForm">
-			<h2 class="subheading" data-bind="text: createAccountHeading"></h2>
-			<div class="row">
+		<div class="fieldset">
+			<div class="row" data-bind="visible: bSecurityScreenEmbeded">
+				<h3 data-bind="i18n: {'key': '%MODULENAME%/HEADING_EDIT_NEW_ACCOUNT'}"></h3>
+			</div>
+			<div class="row" data-bind="visible: !bSecurityScreenEmbeded">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_LOGIN'}"></span>
 				<span class="value">
-					<input class="input disabled" type="text" data-bind="value: login, hasFocus: loginFocus, enable: false, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
+					<input class="input disabled" type="text" data-bind="value: login, hasFocus: loginFocus, enable: false, valueUpdate: 'afterkeydown'" />
 				</span>
 			</div>
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_PASSWORD'}"></span>
+				<span class="value">
+					<input class="input" autocomplete="current-password" type="password" data-bind="value: currentPassword, valueUpdate: 'afterkeydown'" />
+				</span>
+			</div>
+			<div class="row">
+				<span class="label" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_NEW_PASSWORD'}"></span>
 				<span class="value">
 					<input class="input" autocomplete="new-password" type="password" data-bind="value: pass, hasFocus: passFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
@@ -23,14 +32,24 @@
 					<input class="input" autocomplete="new-password" type="password" data-bind="value: confirmPass, hasFocus: confirmPassFocus, valueUpdate: 'afterkeydown', onEnter: saveAccount" />
 				</span>
 			</div>
+
 			{%INCLUDE-START/Edit-Standard-Account-After/INCLUDE-END%}
+
+			<div class="buttons" style="text-align: left;" data-bind="visible: bSecurityScreenEmbeded">
+				<span class="button" data-bind="click: saveAccount, visible: !isSaving()">
+					<span data-bind="text: updateButtonText"></span>
+				</span>
+				<span class="button" data-bind="visible: isSaving()">
+					<span data-bind="text: updateProgressButtonText"></span>
+				</span>
+			</div>
 		</div>
 
-		<div class="buttons" data-bind="visible: visibleCreateForm">
-			<span class="button" data-bind="click: saveAccount, visible: !isCreating()">
+		<div class="buttons" data-bind="visible: !bSecurityScreenEmbeded">
+			<span class="button" data-bind="click: saveAccount, visible: !isSaving()">
 				<span data-bind="text: updateButtonText"></span>
 			</span>
-			<span class="button" data-bind="visible: isCreating()">
+			<span class="button" data-bind="visible: isSaving()">
 				<span data-bind="text: updateProgressButtonText"></span>
 			</span>
 		</div>
