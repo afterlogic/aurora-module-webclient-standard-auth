@@ -34,8 +34,6 @@ function CStandardAccountsSettingsFormView()
 
 	this.visibleHeading = ko.observable(true) // Can be changed by SecuritySettingsWebclient module
 	this.bSecurityScreenEmbeded = false // is redefined by SecuritySettingsWebclient module
-
-	this.sFakePass = 'xxxxxxxx'; // fake password uses to display something in password input while account editing
 	
 	this.iUserId = App.getUserId(); // current user identifier
 	
@@ -231,7 +229,7 @@ CStandardAccountsSettingsFormView.prototype.openEditAccountForm = function (iAcc
 	{
 		this.currentAccountId(iAccountId);
 		this.login(oAccount.login);
-		this.pass(this.sFakePass);
+		this.pass('');
 		this.passFocus(true);
 		this.confirmPass('');
 	}
@@ -261,7 +259,7 @@ CStandardAccountsSettingsFormView.prototype.saveAccount = function ()
 	{
 		this.loginFocus(true);
 	}
-	else if (sPass === '' || sPass === this.sFakePass)
+	else if (sPass === '')
 	{
 		this.passFocus(true);
 	}
